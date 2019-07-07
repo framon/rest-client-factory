@@ -34,6 +34,7 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate> {
   private boolean traceEnabled;
 
   public RestTemplateFactory() {
+    credentialsConfigurators = List.of();
     loggingRequestInterceptor = new LoggingRequestInterceptor();
     traceEnabled = LoggerFactory.getLogger(getClass()).isTraceEnabled();
   }
