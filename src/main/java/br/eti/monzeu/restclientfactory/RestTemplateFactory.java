@@ -16,6 +16,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -29,6 +30,7 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate> {
 
   private List<CredentialsConfigurator> credentialsConfigurators;
   private LoggingRequestInterceptor loggingRequestInterceptor;
+  private ResponseErrorHandler errorHandler;
   private ObjectMapper objectMapper;
   private Integer timeout;
   private boolean traceEnabled;
@@ -91,6 +93,10 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate> {
       rt.getMessageConverters().add(0, messageConverter);
     }
 
+    if (errorHandler != null) {
+      rt.setErrorHandler(errorHandler);
+    }
+
     log.trace("Configuring RestTemplate credentials");
     for (CredentialsConfigurator credentialsConfigurator : credentialsConfigurators) {
       credentialsConfigurator.configureRestTemplate(rt);
@@ -121,6 +127,10 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate> {
 
   public void setObjectMapper(ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
+  }
+
+  public void setErrorHandler(ResponseErrorHandler errorHandler) {
+    this.errorHandler = errorHandler;
   }
 
   @Override
