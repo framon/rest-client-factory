@@ -6,7 +6,7 @@
 
   <groupId>br.eti.monzeu</groupId>
   <artifactId>rest-client-factory</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 
   <name>rest-client-factory</name>
 
